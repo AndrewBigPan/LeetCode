@@ -1,0 +1,75 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void reverse(string& s)
+    {
+        char* p,*q;
+        p=&s[0];
+        q=&s[s.length()-1];
+        while(p<q)
+        {
+            char tmp=*p;
+            *p=*q;
+            *q=tmp;
+            p++;
+            q--;
+        }
+    }
+    string itos(int val)
+    {
+        string s="";
+        if(val<0)
+        {
+            s+='-';
+            val=-val;
+        }
+        string s1="";
+        while(val)
+        {
+            s1+=val%10+'0';
+            val/=10;
+        }
+        reverse(s1);
+        s+=s1;
+        return s;
+    }
+    void BTP(TreeNode* root,vector<string>& ans,string& tmp)
+    {
+        string strVal = itos(root->val);
+        tmp+=strVal;
+        if(root->left)
+        {
+            tmp+="->";
+            BTP(root->left,ans,tmp);
+            tmp.erase(tmp.length()-2,2);
+        }
+        if(root->right)
+        {
+            tmp+="->";
+            BTP(root->right,ans,tmp);
+            tmp.erase(tmp.length()-2,2);
+        }
+        if(root->left==NULL&&root->right==NULL)
+        {
+            ans.push_back(tmp);
+        }
+        tmp.erase(tmp.length()-strVal.length(),strVal.length());
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        string tmp="";
+        vector<string> ans;
+        if(root)
+        {
+            BTP(root,ans,tmp);
+        }
+        return ans;
+    }
+};

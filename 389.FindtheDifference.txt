@@ -1,0 +1,33 @@
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        map<char,int> m;
+        map<char,int>::iterator it;
+        for(int i=0;i<s.length();i++)
+        {
+            m[s[i]]++;
+        }
+        for(int i=0;i<t.length();i++)
+        {
+            it=m.find(t[i]);
+            if(it==m.end())
+            {
+                //没找到
+                return t[i];
+            }
+            else
+            {
+                it->second--;
+            }
+        }
+        for(it=m.begin();it!=m.end();it++)
+        {
+            //出现次数没减到0
+            if(it->second!=0)
+            {
+                return it->first;
+            }
+        }
+        return '\0';
+    }
+};

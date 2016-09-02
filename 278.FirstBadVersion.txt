@@ -1,0 +1,46 @@
+// Forward declaration of isBadVersion API.
+bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        //找出第一个version是bad的。调用isBadVersion这个函数最少。
+        int s=1;
+        int e=n;
+        while(e-s>1)
+        {
+            int m=s+(e-s)/2;
+            if(isBadVersion(m)&&!isBadVersion(m-1))
+            {
+                //找到了
+                return m;
+            }
+            else if(isBadVersion(m))
+            {
+                //都是badVersion
+                e=m-1;
+            }
+            else if(!isBadVersion(m-1))
+            {
+                //都是goodVersion
+                s=m+1;
+            }
+        }
+        if(e==s&&isBadVersion(e))
+        {
+            return e;
+        }
+        if(e-s==1)
+        {
+            if(isBadVersion(e)&&isBadVersion(s))
+            {
+                return s;
+            }
+            else if(isBadVersion(e))
+            {
+                return e;
+            }
+        }
+        return -1;
+    }
+};

@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        //求除了自身之外的所有元素的乘积。不能用除法，而且在O(n)的时间复杂度内完成。
+        int n=nums.size();
+        int* p=new int[n];//求出前i个数的乘积(0,1,2,3,...,i-1)
+        int* q=new int[n];//求出后n-i-1个数的乘积(i+1,...,n-1)
+        p[0]=1;
+        q[0]=1;
+        for(int i=1;i<n;i++)
+        {
+            p[i]=p[i-1]*nums[i-1];
+            q[i]=q[i-1]*nums[n-i];
+        }
+        vector<int> ans;
+        for(int i=0;i<n;i++)
+        {
+            ans.push_back(p[i]*q[n-i-1]);
+        }
+        return ans;
+    }
+};
