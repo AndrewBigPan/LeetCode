@@ -1,0 +1,46 @@
+class Solution {
+public:
+    //怎么提前标记两个字符串是否有重复的字符？
+    /*bool hasComLetter(string a,string b)
+    {
+        //这个方法不是提前存储状态的，是每次计算的。所以时间复杂度要高。
+        map<char,int> m;
+        for(int i=0;i<a.length();i++)
+        {
+            m[a[i]]++;
+        }
+        for(int i=0;i<b.length();i++)
+        {
+            if(m.find(b[i])!=m.end())
+            {
+                return true;
+            }
+        }
+        return false;
+    }*/
+    int maxProduct(vector<string>& words) {
+        vector<int> tmp;
+        int n=words.size();
+        for(int i=0;i<n;i++)
+        {
+            int t=0;
+            for(int j=0;j<words[i].length();j++)
+            {
+                t|=(1<<(words[i][j]-'a'));
+            }
+            tmp.push_back(t);
+        }
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i;j<n;j++)
+            {
+                if((tmp[i]&tmp[j])==0&&(words[i].length()*words[j].length()>ans))
+                {
+                    ans=words[i].length()*words[j].length();
+                }
+            }
+        }
+        return ans;
+    }
+};
